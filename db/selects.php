@@ -139,7 +139,7 @@
 				'^posts.postid', '^posts.categoryid', '^posts.type', 'basetype' => 'LEFT(^posts.type, 1)', 'hidden' => "INSTR(^posts.type, '_HIDDEN')>0",
 				'^posts.acount', '^posts.selchildid', '^posts.closedbyid', '^posts.upvotes', '^posts.downvotes', '^posts.netvotes', '^posts.views', '^posts.hotness',
 				'^posts.flagcount', '^posts.title', '^posts.tags', 'created' => 'UNIX_TIMESTAMP(^posts.created)', '^posts.name',
-				'categoryname' => '^categories.title', 'categorybackpath' => "^categories.backpath",
+				'categoryname' => '^categories.title', 'categorybackpath' => "^categories.backpath","categorySubject"=>"^categories.subject",
 				'categoryids' => "CONCAT_WS(',', ^posts.catidpath1, ^posts.catidpath2, ^posts.catidpath3, ^posts.categoryid)",
 			),
 
@@ -896,7 +896,7 @@
 		);
 
 		$selectspec=array(
-			'columns' => array('^categories.categoryid', '^categories.parentid', 'title' => '^categories.title', 'tags' => '^categories.tags', '^categories.qcount', '^categories.position'),
+			'columns' => array('^categories.categoryid', '^categories.parentid', 'title' => '^categories.title', 'tags' => '^categories.tags', '^categories.qcount', '^categories.position','^categories.subject','^categories.page_title'),
 			'source' => '^categories JOIN ('.implode(' UNION ', $parentselects).') y ON ^categories.parentid<=>parentkey'.($full ? ' LEFT JOIN ^categories AS child ON child.parentid=^categories.categoryid GROUP BY ^categories.categoryid' : '').' ORDER BY ^categories.position',
 			'arguments' => array($slugsorid, $slugsorid, $slugsorid, $slugsorid),
 			'arraykey' => 'categoryid',
